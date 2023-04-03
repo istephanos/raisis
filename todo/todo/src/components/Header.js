@@ -1,17 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Button from "./Button";
-import {clear} from "@testing-library/user-event/dist/clear";
 
-export const Header = ({title}) => {
-  const onClick = () => {
-    console.log("Click");
-  };
-
+export const Header = ({title, onAdd, showAdd}) => {
   return (
     <header className="header">
       <h1>{title}</h1>
-      <Button color="#411530" text="Hello" onClick={onClick} />
+      <Button
+        color={showAdd ? "red" : "#1e1e33"}
+        text={showAdd ? "Close" : "Add"}
+        onClick={onAdd}
+      />
     </header>
   );
 };

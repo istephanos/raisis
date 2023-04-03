@@ -1,0 +1,34 @@
+{
+  "tasks": [
+    {
+      "id": 2,
+      "text": "Creaza aplicatie TO DO React",
+      "day": "Mar 30",
+      "reminder": false
+    },
+    {
+      "id": 3,
+      "text": "Incepe un proiect nou",
+      "day": "Mar 31",
+      "reminder": true
+    },
+    {
+      "id": 4,
+      "text": "Continua proiectul",
+      "day": "April 7",
+      "reminder": true
+    },
+    {
+      "text": "reger",
+      "day": "reger",
+      "reminder": false,
+      "id": 5
+    },
+    {
+      "text": "asds",
+      "day": "dasda",
+      "reminder": false,
+      "id": 6
+    }
+  ]
+}
