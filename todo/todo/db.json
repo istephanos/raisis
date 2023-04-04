@@ -1,34 +1,22 @@
 {
   "tasks": [
     {
-      "id": 2,
-      "text": "Creaza aplicatie TO DO React",
-      "day": "Mar 30",
-      "reminder": false
-    },
-    {
-      "id": 3,
-      "text": "Incepe un proiect nou",
-      "day": "Mar 31",
-      "reminder": true
-    },
-    {
-      "id": 4,
-      "text": "Continua proiectul",
-      "day": "April 7",
-      "reminder": true
-    },
-    {
-      "text": "reger",
-      "day": "reger",
+      "text": "tunde-l pe Iuli",
+      "day": "today",
       "reminder": false,
-      "id": 5
+      "id": 1
     },
     {
-      "text": "asds",
-      "day": "dasda",
+      "text": "mergi la tuns la Dani",
+      "day": "today",
       "reminder": false,
-      "id": 6
+      "id": 2
+    },
+    {
+      "text": "mergi la",
+      "day": "132aad",
+      "reminder": false,
+      "id": 3
     }
   ]
 }

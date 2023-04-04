@@ -2,13 +2,12 @@ import {useState, useEffect} from "react";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Tasks from "./components/Tasks";
 import AddTask from "./components/AddTask";
 import About from "./components/About";
+import ShowTasks from "./components/ShowTasks";
 
 const App = () => {
   const [showAddTask, setShowAddTask] = useState(false);
-
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
@@ -20,57 +19,65 @@ const App = () => {
     getTasks();
   }, []);
 
-  //fetch Tasks
+  // Fetch Tasks
   const fetchTasks = async () => {
     const res = await fetch("http://localhost:5000/tasks");
     const data = await res.json();
+
     return data;
   };
 
-  //fetch Task
+  // Fetch Task
   const fetchTask = async (id) => {
     const res = await fetch(`http://localhost:5000/tasks/${id}`);
     const data = await res.json();
+
     return data;
   };
 
-  //add Task
+  // Add Task
   const addTask = async (task) => {
-    // const id = Math.floor(Math.random() * 10000) + 1;
-    // const newTask = {id, ...task};
-    // setTasks([...tasks, newTask]);
-
     const res = await fetch("http://localhost:5000/tasks", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-type": "application/json",
       },
       body: JSON.stringify(task),
     });
+
     const data = await res.json();
+
     setTasks([...tasks, data]);
+
+    // const id = Math.floor(Math.random() * 10000) + 1
+    // const newTask = { id, ...task }
+    // setTasks([...tasks, newTask])
   };
 
-  //delete task
+  // Delete Task
   const deleteTask = async (id) => {
-    await fetch(`http://localhost:5000/tasks/${id}`, {
+    const res = await fetch(`http://localhost:5000/tasks/${id}`, {
       method: "DELETE",
     });
-    setTasks(tasks.filter((task) => task.id !== id));
+    //We should control the response status to decide if we will change the state or not.
+    res.status === 200
+      ? setTasks(tasks.filter((task) => task.id !== id))
+      : alert("Error Deleting This Task");
   };
 
-  //toggle reminder
+  // Toggle Reminder
   const toggleReminder = async (id) => {
     const taskToToggle = await fetchTask(id);
-    const updatedTask = {...taskToToggle, reminder: !taskToToggle.reminder};
+    const updTask = {...taskToToggle, reminder: !taskToToggle.reminder};
 
     const res = await fetch(`http://localhost:5000/tasks/${id}`, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json",
+        "Content-type": "application/json",
       },
-      body: JSON.stringify(updatedTask),
+      body: JSON.stringify(updTask),
     });
+
     const data = await res.json();
 
     setTasks(tasks.map((task) => (task.id === id ? {...task, reminder: data.reminder} : task)));
@@ -80,25 +87,24 @@ const App = () => {
     <Router>
       <div className="container">
         <Header onAdd={() => setShowAddTask(!showAddTask)} showAdd={showAddTask} />
-
         <Routes>
           <Route
             path="/"
-            exact
-            // render={(props) => {
-            //   <>
-            //     {tasks.length > 0 ? (
-            //       <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
-            //     ) : (
-            //       "No tasks to show"
-            //     )}
-            //   </>;
-            // }}
-            element={showAddTask && <AddTask onAdd={addTask} />}
+            element={
+              <>
+                <div className="box-1">{showAddTask && <AddTask onAdd={addTask} />}</div>
+                <div className="box-2">
+                  <ShowTasks
+                    tasks={tasks}
+                    deleteTask={deleteTask}
+                    toggleReminder={toggleReminder}
+                  />
+                </div>
+              </>
+            }
           />
-          <Route exact path="/about" element={<About />} />
+          <Route path="/about" element={<About />} />
         </Routes>
-
         <Footer />
       </div>
     </Router>
